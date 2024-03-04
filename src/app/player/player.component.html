@@ -1,0 +1,56 @@
+<!-- player.component.html -->
+
+<div>
+  <h2>Queries</h2>
+</div>
+<mat-form-field>
+  <mat-label>Select Option</mat-label>
+  <mat-select [(ngModel)]="selectedOption" (selectionChange)="onOptionSelected()">
+    <mat-option *ngFor="let option of dropdownOptions" [value]="option.value">
+      {{ option.label }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<p *ngIf="selectedOption.length > 0">Selected Option: {{ selectedOptionMap[selectedOption] }} are {{queryResult.ans}} by {{queryResult.name}}</p>
+<h2>Players</h2>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let player"> {{ player.name }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="touchdownsThrown">
+      <th mat-header-cell *matHeaderCellDef> Touchdowns </th>
+      <td mat-cell *matCellDef="let player"> {{ player.touchdownsThrown }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="rushingYards">
+      <th mat-header-cell *matHeaderCellDef> Rushingyards </th>
+      <td mat-cell *matCellDef="let player"> {{ player.rushingYards }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sacks">
+      <th mat-header-cell *matHeaderCellDef> Sacks </th>
+      <td mat-cell *matCellDef="let player"> {{ player.sacks }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="madeFieldGoals">
+      <th mat-header-cell *matHeaderCellDef> FieldGoals </th>
+      <td mat-cell *matCellDef="let player"> {{ player.madeFieldGoals }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let player">
+        <button mat-raised-button color="primary" routerLink="/edit/{{player.name}}">Edit</button>
+        <button mat-raised-button color="warn" (click)="deletePlayer(player.name)">Delete</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+</div>
